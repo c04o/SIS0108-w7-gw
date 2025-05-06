@@ -1,0 +1,45 @@
+<!-- templates/stack.html -->
+{% extends 'index.html' %}
+
+{% block content %}
+<h1 class="text-center mb-4">Task Review System</h1>
+
+<!-- Form to add a task -->
+<form method="POST" action="{{ url_for('add_task') }}" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="task" class="form-control" placeholder="Task name" required>
+        <button type="submit" class="btn btn-primary">Add Task</button>
+    </div>
+</form>
+
+<!-- Display the next task -->
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">Next Task to Review</h5>
+        <p class="card-text">
+            {% if next_task %}
+                {{ next_task }}
+            {% else %}
+                No tasks to review.
+            {% endif %}
+        </p>
+    </div>
+</div>
+
+<!-- Button to review (pop) -->
+<form method="POST" action="{{ url_for('review_task') }}" class="mb-4">
+    <button type="submit" class="btn btn-danger" {% if not tasks %}disabled{% endif %}>Review Task</button>
+</form>
+
+<!-- List of pending tasks -->
+<h3>Pending Tasks</h3>
+{% if tasks %}
+    <ul class="list-group">
+        {% for task in tasks|reverse %}
+            <li class="list-group-item">{{ task }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No pending tasks.</p>
+{% endif %}
+{% endblock %}
