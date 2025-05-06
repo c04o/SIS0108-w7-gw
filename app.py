@@ -7,7 +7,7 @@ task_stack = Stack()
 @app.route('/')
 def index():
     next_task = task_stack.peek()
-    return render_template('index.html', tasks=task_stack.items, next_task=next_task)
+    return render_template('stack.html', tasks=task_stack.items, next_task=next_task)
 
 @app.route('/add', methods=['POST'])
 def add_task():
